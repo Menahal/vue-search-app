@@ -6,7 +6,6 @@ Vue.use(Vuex)
 
 const store = new Vuex.Store({
   state: {
-    test: "hello there...",
     artistList:[]
   },
   actions:{
@@ -25,7 +24,6 @@ const store = new Vuex.Store({
     }
   },  
   getters: {
-    getTest: (state) => state.test,
     getArtistList: (state) => state.artistList,
   }
 })
