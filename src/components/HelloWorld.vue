@@ -17,7 +17,7 @@
         class="font-weight-bold subtitle-1"> 
         {{getArtistList.length}} <span>{{getArtistList.length > 1 ? "results" : "result"}}</span> found for "{{artist}}"
       </span>
-      <v-progress-linear indeterminate class="mt-n8" value="15"></v-progress-linear>
+      <!-- <v-progress-linear indeterminate class="mt-n8" value="15"></v-progress-linear> -->
     </div>
     <!-- Search Results -->
     <div class="mt-8 d-flex" v-if="artist">      
@@ -56,6 +56,7 @@
               rounded
               text
               class="text-capitalize"
+              @click="viewArtist()"
             >
               View
             </v-btn>
@@ -104,6 +105,9 @@
       },
       resetArtistList(){
         this.$store.commit("resetArtistsList");
+      },
+      viewArtist(){
+        this.$router.push('About')
       }
     },
     mounted(){

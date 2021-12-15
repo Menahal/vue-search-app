@@ -2,14 +2,14 @@
   <v-app>
     <Header/>
     <v-main>
-      <HelloWorld/>
+      <router-view></router-view>
     </v-main>
     <Footer/>
   </v-app>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld';
+// import HelloWorld from './components/HelloWorld';
 import Header from './components/Layout/Header';
 import Footer from './components/Layout/Footer';
 
@@ -19,7 +19,7 @@ export default {
 
   components: {
     Header,
-    HelloWorld,
+    // HelloWorld,
     Footer,
   },
 
