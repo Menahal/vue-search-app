@@ -6,21 +6,30 @@ Vue.use(Vuex)
 
 const store = new Vuex.Store({
   state: {
-    artistList:[]
+    artistList:[],
+    searchHistory:[]
   },
   actions:{
     fetchArtistList({ commit },payload) {
-        console.log("payload",payload);
-        axios.get(`https://rest.bandsintown.com/artists/`,{params:payload})
-            .then(response => {
-                commit('setArtistsList', response.data)
-            })
-    }        
+      axios.get(`https://rest.bandsintown.com/artists/${payload.artistname}`,{params:{
+        app_id:"abc"
+      }})
+      .then(response => {
+          commit('setArtistsList', response.data);
+          commit('setSearchHistory',response.data);
+      })
+  }                
   },
   mutations:{
     setArtistsList(state, artistList) {
         state.artistList = []
         state.artistList.push(artistList)
+    },
+    resetArtistsList(state){
+      state.artistList = []
+    },
+    setSearchHistory(state, searchItem){
+      state.searchHistory.push(searchItem)
     }
   },  
   getters: {

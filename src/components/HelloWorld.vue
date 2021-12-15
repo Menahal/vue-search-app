@@ -1,6 +1,5 @@
 <template>
-  <div style="height:80vh" class="d-flex flex-column justify-start align-center">
-       <!-- getArtistList: {{getArtistList}} -->
+  <div style="overflow-y:scroll" class="d-flex flex-column justify-start align-center mb-3">
     <!-- Search Field -->
     <div id="search" class="mt-15 search-width" >
       <v-text-field
@@ -12,49 +11,57 @@
         color="grey"
         autofocus
         @keydown.enter="search()"
+        @keydown="resetArtistList()"
       ></v-text-field>
-      <span v-if="getArtistList.length" 
-        class="font-weight-bold"> 
-        {{getArtistList.length}} results found for "{{artist}}"
+      <span v-if="artist && getArtistList.length" 
+        class="font-weight-bold subtitle-1"> 
+        {{getArtistList.length}} <span>{{getArtistList.length > 1 ? "results" : "result"}}</span> found for "{{artist}}"
       </span>
-      <!-- <v-progress-linear indeterminate class="mt-n8" value="15"></v-progress-linear> -->
+      <v-progress-linear indeterminate class="mt-n8" value="15"></v-progress-linear>
     </div>
     <!-- Search Results -->
-    <div class="mt-8" v-if="getArtistList.length">      
-      <v-card
-        class="mx-auto"
-        max-width="344"
-        outlined
-        v-for="(artist,index) in getArtistList"
-        :key="index"
-      >
-        <v-list-item three-line>
-          <v-list-item-content>
-            <div class="text-overline mb-4">
-              OVERLINE
-            </div>
-            <v-list-item-title class="text-h5 mb-1">
-              {{artist.name}}
-            </v-list-item-title>
-            <v-list-item-subtitle>{{artist.facebook_page_url}}</v-list-item-subtitle>
-          </v-list-item-content>
-
-    <v-img
-      height="50" width="50"
-      :src="artist.image_url"
-    ></v-img>
-        </v-list-item>
-
-        <v-card-actions>
-          <v-btn
-            outlined
-            rounded
-            text
-          >
-            View
-          </v-btn>
-        </v-card-actions>
-      </v-card>
+    <div class="mt-8 d-flex" v-if="artist">      
+      <!-- If Artist Not Found -->
+      <div v-if="!getArtistList.length" > No artist found</div>
+      <!-- Else -->
+      <div v-else>
+        <v-card
+          class="mx-2 shadow"
+          max-width="300"
+          min-width="300"
+          outlined
+          v-for="(artist,index) in getArtistList"
+          :key="index"
+        >
+          <v-img
+              height="150" width="100%"
+              :src="artist.image_url ? artist.image_url : sample_image"
+            ></v-img>      
+          <v-list-item three-line>
+            <v-list-item-content>
+              <!-- <div class="text-overline mb-4">
+                OVERLINE
+              </div> -->
+              <v-list-item-title class="text-h5 mb-1">
+                {{artist.name ? artist.name : "Anonymous"}}
+              </v-list-item-title>
+              <v-list-item-subtitle class="caption" :class="artist.facebook_page_url ? 'grey--text' :'text-capitalize'">
+                {{artist.facebook_page_url ? artist.facebook_page_url : "No facebook URL"}}
+              </v-list-item-subtitle>
+            </v-list-item-content>
+          </v-list-item>
+          <v-card-actions class="pb-3">
+            <v-btn
+              outlined
+              rounded
+              text
+              class="text-capitalize"
+            >
+              View
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+      </div>
     </div>
   </div>
   
@@ -68,11 +75,14 @@
     data: () => ({
       artist:"",
       artists:[],
+      sample_image:""
     }),
     computed:{
     ...mapGetters([
       'getArtistList'
     ]),      
+    },
+    watch:{
     },
     methods:{
       search(){
@@ -91,9 +101,19 @@
               result += characters.charAt(Math.floor(Math.random() * charactersLength));
           }
           return result;
+      },
+      resetArtistList(){
+        this.$store.commit("resetArtistsList");
       }
     },
     mounted(){
+      this.$store.commit("resetArtistsList");
+      // this.findWordWithMaxOccurencesElement("iii amoimklmpm ee");
+      // if (this.checkBracketsBalance("]({[]})")) {
+      //   console.log("balanced");
+      // } else {
+      //   console.log("not balanced");
+      // }
       // this.$store.dispatch("fetchAllArtists")
     }
   }
