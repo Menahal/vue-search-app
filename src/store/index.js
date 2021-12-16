@@ -22,7 +22,7 @@ const store = new Vuex.Store({
   },
   mutations:{
     setArtistsList(state, artistList) {
-        state.artistList = []
+        // state.artistList = []
         state.artistList.push(artistList)
     },
     resetArtistsList(state){
@@ -34,6 +34,7 @@ const store = new Vuex.Store({
   },  
   getters: {
     getArtistList: (state) => state.artistList,
+    getSearchHistory: (state) => state.searchHistory,
   }
 })
 

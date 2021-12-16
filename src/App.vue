@@ -9,7 +9,6 @@
 </template>
 
 <script>
-// import HelloWorld from './components/HelloWorld';
 import Header from './components/Layout/Header';
 import Footer from './components/Layout/Footer';
 
@@ -19,12 +18,14 @@ export default {
 
   components: {
     Header,
-    // HelloWorld,
     Footer,
   },
 
   data: () => ({
     //
   }),
+  mounted(){
+    // this.$router.push('/');
+  }
 };
 </script>

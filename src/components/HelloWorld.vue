@@ -1,5 +1,6 @@
 <template>
-  <div style="overflow-y:scroll" class="d-flex flex-column justify-start align-center mb-3">
+  <div class="d-flex flex-column justify-start align-center mb-3 parent-div-height">
+    <!-- {{getArtistList}} -->
     <!-- Search Field -->
     <div id="search" class="mt-15 search-width" >
       <v-text-field
@@ -20,18 +21,19 @@
       <!-- <v-progress-linear indeterminate class="mt-n8" value="15"></v-progress-linear> -->
     </div>
     <!-- Search Results -->
-    <div class="mt-8 d-flex" v-if="artist">      
+    <div class="mt-8 d-flex" v-if="artist && getArtistList.length">      
       <!-- If Artist Not Found -->
-      <div v-if="!getArtistList.length" > No artist found</div>
+      <!-- <div v-if="!getArtistList.length" > No artist found</div> -->
       <!-- Else -->
-      <div v-else>
+      <div>
         <v-card
-          class="mx-2 shadow"
+          class="mx-2 pointer"
           max-width="300"
           min-width="300"
           outlined
           v-for="(artist,index) in getArtistList"
           :key="index"
+          @click="viewArtist()"
         >
           <v-img
               height="150" width="100%"
@@ -111,14 +113,7 @@
       }
     },
     mounted(){
-      this.$store.commit("resetArtistsList");
-      // this.findWordWithMaxOccurencesElement("iii amoimklmpm ee");
-      // if (this.checkBracketsBalance("]({[]})")) {
-      //   console.log("balanced");
-      // } else {
-      //   console.log("not balanced");
-      // }
-      // this.$store.dispatch("fetchAllArtists")
+      this.resetArtistList();
     }
   }
 </script>
@@ -126,6 +121,9 @@
 <style scoped>
   .search-width{
     width: 70vw;
+  }
+  .parent-div-height{
+    min-height: 80vh;
   }
   @media screen and (max-width: 576px) {
    .search-width{

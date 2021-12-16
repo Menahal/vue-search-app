@@ -1,4 +1,16 @@
 
 .w-100{
-    width:100vw;
+    width: 100% !important;
+}
+.border-bottom{
+    border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+}
+.pointer{
+    cursor: pointer;
+}
+.link{
+    text-decoration: none !important;
+}
+.link:hover{
+    font-weight: bold;
 }
