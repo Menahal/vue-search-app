@@ -10,7 +10,7 @@
       <div style="height:150px;width:150px" class="elevation-2 white pa-1 d-flex align-center justify-center">
         <img
           style="height:140px;width:140px"
-          src="@/assets/images/logos/logo.png"
+          src="@/assets/images/logos/logo.svg"
           alt="artist_profile"
         >
       </div>      
