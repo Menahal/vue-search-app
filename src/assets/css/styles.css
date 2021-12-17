@@ -13,7 +13,9 @@ Description: This file contains the global CSS for this app
 }
 .link{
     text-decoration: none !important;
+    color: grey !important;
 }
 .link:hover{
     font-weight: bold;
+    color: rgb(77, 148, 241) !important;
 }

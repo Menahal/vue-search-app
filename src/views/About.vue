@@ -17,7 +17,7 @@
       <div class="display-1 ml-5">
         <p>{{getArtist.name ? getArtist.name : 'Anonymous'}}</p>
         <p class="subtitle-2 mt-0">
-          <a target="" class="link grey--text" 
+          <a target="_blank" class="link" 
           :href="getArtist.facebook_page_url ? getArtist.facebook_page_url : '#'">
           {{getArtist.facebook_page_url ? getArtist.facebook_page_url : 'No facebook URL'}}
           </a>
@@ -28,7 +28,7 @@
     <!-- Event Section -->
     <div>
       <div>
-        <p class="subtitle-1 px-2">{{getArtist.upcoming_event_count ? getArtist.upcoming_event_count : '0'}} upcoming events</p>
+        <p class="subtitle-1 font-weight-bold px-2">{{getArtist.upcoming_event_count ? getArtist.upcoming_event_count : '0'}} upcoming events</p>
       </div>
       <div>
         <v-card elevation="2" 
@@ -49,7 +49,7 @@
               </v-col>
               <v-col>
                 <div class="font-weight-bold body">Venue</div>
-                <div class="caption">Arizona</div>              
+                <div class="caption">{{event.venue && event.venue.name ? event.venue.name : 'Unknown'}}</div>              
               </v-col>
             </v-row>
             <v-row>
