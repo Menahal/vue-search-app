@@ -10,14 +10,17 @@
       <div style="height:150px;width:150px" class="elevation-2 white pa-1 d-flex align-center justify-center">
         <img
           style="height:140px;width:140px"
-          src="@/assets/images/logos/logo.svg"
+          :src="getArtist.image_url ? getArtist.image_url : '@/assets/images/logos/logo.svg'"
           alt="artist_profile"
         >
       </div>      
       <div class="display-1 ml-5">
-        <p>John Musk</p>
+        <p>{{getArtist.name ? getArtist.name : 'Anonymous'}}</p>
         <p class="subtitle-2 mt-0">
-          <a target="" class="link grey--text" href="https://facebook.com">https://facebook.com</a>
+          <a target="" class="link grey--text" 
+          :href="getArtist.facebook_page_url ? getArtist.facebook_page_url : '#'">
+          {{getArtist.facebook_page_url ? getArtist.facebook_page_url : 'No facebook URL'}}
+          </a>
         </p>
       </div>
       <!-- <v-divider vertical class="my-3 mx-1"></v-divider> -->
@@ -25,10 +28,13 @@
     <v-divider style="width:100vw" class="my-6"></v-divider>
     <!-- Event Section -->
     <div>
+      <p class="subtitle-1">{{getArtist.upcoming_event_count ? getArtist.upcoming_event_count : '0'}} upcoming events</p>
+    </div>
+    <div>
       <v-card elevation="2" 
-        v-for="i in 20" 
+        v-for="(event,i) in getArtistEvents" 
         :key="i" 
-        height="230px" 
+        max-height="230px" min-height="230px"
         class="mr-4 mb-4 d-inline-block event-card-dimensions" 
       >
         <v-card-title class="text-uppercase py-3 dark--text subtitle-1 rounded-0">
@@ -36,10 +42,10 @@
         </v-card-title>
         <v-divider class="mx-4"></v-divider>
         <v-card-text>
-          <v-row>
+          <v-row no-gutters>
             <v-col>
               <div class="font-weight-bold body">Country</div>
-              <div>Arizona</div>
+              <div>{{event.venue && event.venue.country ? event.venue.country : 'Unknown'}}</div>
             </v-col>
             <v-col>
               <div class="font-weight-bold body">Venue</div>
@@ -49,11 +55,11 @@
           <v-row>
             <v-col>
               <div class="font-weight-bold body">City</div>
-              <div>Arizona</div>              
+              <div>{{event.venue && event.venue.city ? event.venue.city : 'Unknown'}}</div>              
             </v-col>
             <v-col>
               <div class="font-weight-bold body">Date</div>
-              <div>Arizona</div>              
+              <div>{{event.datetime ? event.datetime.slice(0,10) : 'Unknown'}}</div>              
             </v-col>
           </v-row>          
         </v-card-text>
@@ -65,13 +71,10 @@
 <script>
 import { mapGetters } from 'vuex'
 export default {
-    data:()=>{
-
-    },
     computed:{
     ...mapGetters([
-      // 'getArtistList',
-      // 'getSearchHistory'
+      'getArtist',
+      'getArtistEvents',
     ]),      
     },
     methods:{
