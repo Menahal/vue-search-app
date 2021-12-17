@@ -35,10 +35,9 @@ const store = new Vuex.Store({
        fetchArtistEvents({ commit },payload) {
         axios.get(`${BASE_URL}${payload.artistname}/events`,{params:{
           app_id:"abc",
-          date:"all"
+          date:"upcoming"
         }})
-        .then(response => {
-            console.log('response:::::',response.data);            
+        .then(response => {           
             commit('setArtistEvents', response.data);
         })
     },                    

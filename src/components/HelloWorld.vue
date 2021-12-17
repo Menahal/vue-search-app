@@ -15,14 +15,14 @@
       ></v-text-field>
       <span v-if="artist && getArtist" 
         class="font-weight-bold text-capitalize subtitle-1"> 
-        <span>{{getArtist.length > 1 ? "results" : "result"}}</span> found for "{{artist}}"
+        <span>{{getArtist.length > 1 ? "results" : "result"}}</span> for "{{artist}}"
       </span>
       <!-- <v-progress-linear indeterminate class="mt-n8" value="15"></v-progress-linear> -->
     </div>
     <!-- Search Results -->
     <div class="mt-8 d-flex" v-if="artist && getArtist">      
       <!-- If Artist Not Found -->
-      <!-- <div v-if="!getArtist.length" > No artist found</div> -->
+      <div v-if="!getArtist" > No artist found</div>
       <!-- Else -->
       <div>
         <v-card
@@ -34,7 +34,7 @@
         >
           <v-img
               height="150" width="100%"
-              :src="getArtist.image_url ? getArtist.image_url : sample_image"
+              :src="getArtist.image_url ? getArtist.image_url : '@/assets/images/logos/logo.svg'"
             ></v-img>      
           <v-list-item three-line>
             <v-list-item-content>
@@ -72,7 +72,6 @@
     data: () => ({
       artist:"",
       artists:[],
-      sample_image:""
     }),
     computed:{
     ...mapGetters([
@@ -80,6 +79,13 @@
     ]),      
     },
     methods:{
+      /** 
+       @description
+       This methods is used to dispatch fetch request for searched artist 
+       via store
+       @param none
+       @returns 
+      */      
       search(){
         let payload = {
           app_id: "abcdef",
@@ -87,6 +93,12 @@
         }
         this.$store.dispatch("fetchArtistList",payload);
       },
+      /** 
+       @description
+       This methods is used to generate a random string to be used as app_id 
+       @param length
+       @returns string
+      */       
       generateString(length) {
           // declare all characters
           const characters ='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -97,9 +109,22 @@
           }
           return result;
       },
+      /** 
+       @description
+       This methods is used to reset searched results when user edits the search 
+       @param
+       @returns 
+      */      
       resetArtist(){
         this.$store.commit("resetArtist");
       },
+      /** 
+       @description
+       This methods is used to redirect user to About page
+       which contains selected artist's event details 
+       @param
+       @returns 
+      */        
       viewArtist(){
         let payload = {
           artistname: this.artist
